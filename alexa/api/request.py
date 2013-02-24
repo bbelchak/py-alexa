@@ -24,6 +24,9 @@ class Request(object):
         root = etree.fromstring(text)
         xpath = etree.XPathEvaluator(root)
         xpath.register_namespace('aws', 'http://awis.amazonaws.com/doc/2005-07-11')
-        for site in xpath('//aws:DataUrl'):
-            yield site.text
+        for site in xpath('//aws:Listing'):
+            rv = []
+            for child in site.iterchildren():
+                rv.append(child.text)
+            yield rv
 
